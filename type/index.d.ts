@@ -1,16 +1,16 @@
 export type Waka = {
-  id: 'id';
-  bodyKanji: 'bodyKanji';
-  bodyKana: 'bodyKana';
-  nameKanji: 'nameKanji';
-  nameKana: 'nameKana';
-  kimariji: 'kimariji';
-  imageWref: 'imageWref';
-  imageURL: 'imageURL';
+  id: number;
+  bodyKanji: string;
+  bodyKana: string;
+  nameKanji: string;
+  nameKana: string;
+  kimariji: string;
+  imageWref: string;
+  imageURL: string;
 };
 
 export type User = {
-  id: 'id';
-  name: 'name';
-  score: 'score';
+  id: number;
+  name: string;
+  score: number;
 };

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { fetchWakas } from '@/app/wakas';
 import {
   getKaminoku1,
@@ -29,16 +30,20 @@ export const GameBoard = () => {
   });
 
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const [readingOrder, setReadingOrder] = useState<typeof wakas>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<'正解！' | 'ざんねん' | null>(null);
   const [score, setScore] = useState(0);
-  const [correctWakas, setCorrectWakas] = useState<Set<string>>(new Set());
+  const [correctWakas, setCorrectWakas] = useState<Set<number>>(new Set());
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [timer] = useState(new Timer());
   const [elapsedTime, setElapsedTime] = useState('00:00:00');
+
+  const [volume, setVolume] = useState<number>(1);
+  const [rate, setRate] = useState<number>(0.5);
 
   useEffect(() => {
     if (wakas) {
@@ -73,6 +78,7 @@ export const GameBoard = () => {
     setScore(0);
     timer.reset();
     timer.start();
+    speak();
   };
 
   const calculateTimeBonus = (seconds: number): number => {
@@ -99,7 +105,9 @@ export const GameBoard = () => {
     }
   };
 
-  const jadge = (id: string) => {
+  const jadge = (id: number) => {
+    speechSynthesis.cancel();
+
     timer.stop();
     const timeInSeconds = parseInt(timer.getElapsedTime().split(':')[2]);
 
@@ -120,6 +128,24 @@ export const GameBoard = () => {
     return correctWakas.has(readingOrder[index].id);
   };
 
+  const handleGameEnd = () => {
+    queryClient.setQueryData(['gameResult'], { score });
+    router.push('/game_end');
+  };
+
+  const utterance = new SpeechSynthesisUtterance();
+
+  const speak = () => {
+    if (readingOrder && readingOrder[currentIndex]) {
+      utterance.text = readingOrder[currentIndex].bodyKana;
+      utterance.lang = 'ja-JP';
+      utterance.pitch = 1;
+      utterance.rate = rate;
+      utterance.volume = volume;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <button
@@ -129,6 +155,32 @@ export const GameBoard = () => {
         {isGameStarted ? 'Restart' : 'Start'}
       </button>
 
+      <div>
+        <input
+          type="range"
+          id="volume"
+          name="volume"
+          min="0"
+          max="1"
+          value={volume}
+          step="0.01"
+          onChange={(e) => setVolume(parseFloat(e.target.value))}
+        />
+        <label htmlFor="volume">Volume</label>
+      </div>
+      <div>
+        <input
+          type="range"
+          id="rate"
+          name="rate"
+          min="0"
+          max="1"
+          value={rate}
+          step="0.01"
+          onChange={(e) => setRate(parseFloat(e.target.value))}
+        />
+        <label htmlFor="rate">Speed</label>
+      </div>
       {isGameStarted && wakas && (
         <>
           <div className="flex flex-wrap space-x-4 my-4">
@@ -164,7 +216,16 @@ export const GameBoard = () => {
                 const shimonoku2 = getShimonoku2(waka.bodyKanji);
                 const isCorrect = correctWakas.has(waka.id);
                 return (
-                  <Drawer key={waka.id}>
+                  <Drawer
+                    key={waka.id}
+                    onOpenChange={(open) => {
+                      if (!open && isGameEnd) {
+                        handleGameEnd();
+                      } else if (!open && !isGameEnd) {
+                        speak();
+                      }
+                    }}
+                  >
                     <DrawerTrigger disabled={isCorrect || isGameEnd}>
                       <li
                         onClick={() => jadge(waka.id)}
@@ -182,7 +243,7 @@ export const GameBoard = () => {
                           {result}
                         </DrawerTitle>
                         <DrawerDescription className="text-center mb-4">
-                          詠まれた歌
+                          選んだ歌
                         </DrawerDescription>
                         <div className="writing-vertical mx-auto h-40">
                           <p>{kaminoku1}</p>
@@ -196,7 +257,17 @@ export const GameBoard = () => {
                         </div>
                       </DrawerHeader>
                       <DrawerFooter>
-                        <DrawerClose>次の歌へ</DrawerClose>
+                        <DrawerClose
+                          onClick={() => {
+                            if (isGameEnd) {
+                              handleGameEnd();
+                            } else {
+                              speak();
+                            }
+                          }}
+                        >
+                          次の歌へ
+                        </DrawerClose>
                       </DrawerFooter>
                     </DrawerContent>
                   </Drawer>
