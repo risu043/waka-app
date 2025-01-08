@@ -9,8 +9,9 @@ export const fetchWakas = async () => {
       throw new Error(`Failed to fetchWakas: ${res.status}`);
     }
 
-    const data: Waka[] = await res.json();
-    return data;
+    const wakas: Waka[] = await res.json();
+    const readingOrder = [...wakas].sort(() => Math.random() - 0.5);
+    return { wakas, readingOrder };
   } catch (error) {
     console.error('Error in fetchWakas:', error);
     throw error;

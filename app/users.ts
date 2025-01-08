@@ -28,7 +28,8 @@ export const createUser = async ({
       body: JSON.stringify({ name, score }),
     });
     if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
+      const errorData = await res.json();
+      throw new Error(errorData.errors?.[0]?.msg || 'Unknown error occurred');
     }
     const user: User = await res.json();
     return user;

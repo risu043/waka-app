@@ -11,11 +11,20 @@ export async function POST(req: NextRequest) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
+  // if (!res.ok) {
+  //   throw new Error(`HTTP error! status: ${res.status}`);
+  // }
+  // const user = await res.json();
+  // return Response.json(user, { status: 201 });
+  // レスポンスのJSONを取得
+  const responseData = await res.json();
+
+  // エラーの場合、元のエラーレスポンスを維持
   if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
+    return Response.json(responseData, { status: res.status });
   }
-  const user = await res.json();
-  return Response.json(user, { status: 201 });
+
+  return Response.json(responseData, { status: 201 });
 }
 
 export async function GET() {

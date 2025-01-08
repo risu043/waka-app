@@ -25,15 +25,15 @@ import FlipText from '@/components/ui/flip-text';
 import { Timer } from '@/utils/timer';
 
 export const GameBoard = () => {
-  const { data: wakas } = useQuery({
-    queryKey: ['fetchWakas'],
-    queryFn: fetchWakas,
-  });
+  const { data: { wakas, readingOrder } = { wakas: [], readingOrder: [] } } =
+    useQuery({
+      queryKey: ['fetchWakas'],
+      queryFn: fetchWakas,
+    });
 
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const [readingOrder, setReadingOrder] = useState<typeof wakas>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<'正解！' | 'ざんねん' | null>(null);
   const [score, setScore] = useState(0);
@@ -43,13 +43,6 @@ export const GameBoard = () => {
   const [timer] = useState(new Timer());
   const [elapsedTime, setElapsedTime] = useState('00:00:00');
   const [isAnimating, setIsAnimating] = useState(false);
-
-  useEffect(() => {
-    if (wakas) {
-      const shuffled = [...wakas].sort(() => Math.random() - 0.5);
-      setReadingOrder(shuffled);
-    }
-  }, [wakas]);
 
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
