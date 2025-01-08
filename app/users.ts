@@ -9,8 +9,8 @@ export const fetchUsers = async () => {
       throw new Error(`Failed to fetchWakas: ${res.status}`);
     }
 
-    const data: User[] = await res.json();
-    return data;
+    const user: User[] = await res.json();
+    return user;
   } catch (error) {
     console.error('Error in fetchWakas:', error);
     throw error;
@@ -22,7 +22,7 @@ export const createUser = async ({
   score,
 }: Omit<User, 'id'>): Promise<User> => {
   try {
-    const res = await fetch('/api/user', {
+    const res = await fetch(`${baseUrl}/api/user`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, score }),
@@ -30,8 +30,8 @@ export const createUser = async ({
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
-    const newUser: User = await res.json();
-    return newUser;
+    const user: User = await res.json();
+    return user;
   } catch (error) {
     console.error('ランキングの登録に失敗しました:', error);
     throw error;

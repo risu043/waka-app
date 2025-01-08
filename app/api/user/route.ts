@@ -9,11 +9,13 @@ export async function POST(req: NextRequest) {
   const res = await fetch(apiUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data }),
+    body: JSON.stringify(data),
   });
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);
   }
+  const user = await res.json();
+  return Response.json(user, { status: 201 });
 }
 
 export async function GET() {

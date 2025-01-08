@@ -21,6 +21,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer';
+import FlipText from '@/components/ui/flip-text';
 import { Timer } from '@/utils/timer';
 
 export const GameBoard = () => {
@@ -41,9 +42,7 @@ export const GameBoard = () => {
   const [isGameEnd, setIsGameEnd] = useState(false);
   const [timer] = useState(new Timer());
   const [elapsedTime, setElapsedTime] = useState('00:00:00');
-
-  const [volume, setVolume] = useState<number>(1);
-  const [rate, setRate] = useState<number>(0.5);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     if (wakas) {
@@ -111,6 +110,8 @@ export const GameBoard = () => {
     timer.stop();
     const timeInSeconds = parseInt(timer.getElapsedTime().split(':')[2]);
 
+    setIsAnimating(false);
+
     if (readingOrder && id === readingOrder[currentIndex].id) {
       const timeBonus = calculateTimeBonus(timeInSeconds);
       setResult('正解！');
@@ -137,12 +138,16 @@ export const GameBoard = () => {
 
   const speak = () => {
     if (readingOrder && readingOrder[currentIndex]) {
-      utterance.text = readingOrder[currentIndex].bodyKana;
-      utterance.lang = 'ja-JP';
-      utterance.pitch = 1;
-      utterance.rate = rate;
-      utterance.volume = volume;
-      speechSynthesis.speak(utterance);
+      setTimeout(() => {
+        setIsAnimating(true);
+
+        utterance.text = readingOrder[currentIndex].bodyKana;
+        utterance.lang = 'ja-JP';
+        utterance.pitch = 1;
+        utterance.rate = 0.4;
+        utterance.volume = 1;
+        speechSynthesis.speak(utterance);
+      }, 0);
     }
   };
 
@@ -155,32 +160,6 @@ export const GameBoard = () => {
         {isGameStarted ? 'Restart' : 'Start'}
       </button>
 
-      <div>
-        <input
-          type="range"
-          id="volume"
-          name="volume"
-          min="0"
-          max="1"
-          value={volume}
-          step="0.01"
-          onChange={(e) => setVolume(parseFloat(e.target.value))}
-        />
-        <label htmlFor="volume">Volume</label>
-      </div>
-      <div>
-        <input
-          type="range"
-          id="rate"
-          name="rate"
-          min="0"
-          max="1"
-          value={rate}
-          step="0.01"
-          onChange={(e) => setRate(parseFloat(e.target.value))}
-        />
-        <label htmlFor="rate">Speed</label>
-      </div>
       {isGameStarted && wakas && (
         <>
           <div className="flex flex-wrap space-x-4 my-4">
@@ -203,7 +182,17 @@ export const GameBoard = () => {
             <div className="text-xl">経過時間: {elapsedTime}</div>
           </div>
           <div>
-            {readingOrder ? readingOrder[currentIndex]?.bodyKana : 'Loading...'}
+            {isAnimating && (
+              <FlipText
+                className="text-xl text-black dark:text-white md:text-xl md:leading-[5rem]"
+                word={
+                  readingOrder
+                    ? readingOrder[currentIndex]?.bodyKana
+                    : 'Loading...'
+                }
+                key={`${isAnimating}`}
+              />
+            )}
           </div>
           {isGameEnd && <div>Game End</div>}
           <ul className="grid grid-cols-5 gap-8">

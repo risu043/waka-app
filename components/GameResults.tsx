@@ -6,6 +6,7 @@ interface GameResult {
 import { createUser } from '@/app/users';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { ConfettiButton } from '@/components/ui/confetti';
 
 export default function GameResult() {
   const queryClient = useQueryClient();
@@ -39,7 +40,7 @@ export default function GameResult() {
   };
 
   return (
-    <div>
+    <div className="relative min-h-screen">
       <div>
         <h1>Game End</h1>
         <p>Your score: {gameResult.score}</p>
@@ -51,6 +52,8 @@ export default function GameResult() {
           onChange={(e) => setName(e.target.value)}
         />
         <button type="submit">ランキングに登録する</button>
+        <ConfettiButton type="submit">ランキングに登録する 🎉</ConfettiButton>
+        <ConfettiButton>Confetti 🎉</ConfettiButton>
       </form>
     </div>
   );
