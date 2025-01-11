@@ -4,13 +4,7 @@ import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { fetchWakas } from '@/app/wakas';
-import {
-  getKaminoku1,
-  getKaminoku2,
-  getKaminoku3,
-  getShimonoku1,
-  getShimonoku2,
-} from '@/utils';
+import { getShimonoku1, getShimonoku2 } from '@/utils';
 import {
   Drawer,
   DrawerClose,
@@ -23,6 +17,11 @@ import {
 } from '@/components/ui/drawer';
 import FlipText from '@/components/ui/flip-text';
 import { Timer } from '@/utils/timer';
+import { WakaDetails } from './WakaDetails';
+import { useTheme } from 'next-themes';
+
+import { MagicCard } from '@/components/ui/magic-card';
+import RippleButton from '@/components/ui/ripple-button';
 
 export const GameBoard = () => {
   const { data: { wakas, readingOrder } = { wakas: [], readingOrder: [] } } =
@@ -33,6 +32,7 @@ export const GameBoard = () => {
 
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { theme } = useTheme();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [result, setResult] = useState<'正解！' | 'ざんねん' | null>(null);
@@ -146,12 +146,10 @@ export const GameBoard = () => {
 
   return (
     <div className="container mx-auto">
-      <button
-        onClick={handleStart}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
+      <RippleButton rippleColor="#ADD8E6" onClick={handleStart}>
         {isGameStarted ? 'Restart' : 'Start'}
-      </button>
+      </RippleButton>
+      <RippleButton rippleColor="#ADD8E6">ripple</RippleButton>
 
       {isGameStarted && wakas && (
         <>
@@ -188,12 +186,9 @@ export const GameBoard = () => {
             )}
           </div>
           {isGameEnd && <div>Game End</div>}
-          <ul className="grid grid-cols-5 gap-8">
+          <div className="grid grid-cols-5 gap-8">
             {wakas &&
               wakas.map((waka) => {
-                const kaminoku1 = getKaminoku1(waka.bodyKanji);
-                const kaminoku2 = getKaminoku2(waka.bodyKanji);
-                const kaminoku3 = getKaminoku3(waka.bodyKanji);
                 const shimonoku1 = getShimonoku1(waka.bodyKanji);
                 const shimonoku2 = getShimonoku2(waka.bodyKanji);
                 const isCorrect = correctWakas.has(waka.id);
@@ -208,16 +203,23 @@ export const GameBoard = () => {
                       }
                     }}
                   >
-                    <DrawerTrigger disabled={isCorrect || isGameEnd}>
-                      <li
-                        onClick={() => jadge(waka.id)}
-                        className={`writing-vertical p-8 border ${
-                          isCorrect ? 'bg-gray-300' : 'cursor-pointer'
+                    <DrawerTrigger
+                      disabled={isCorrect || isGameEnd}
+                      onClick={() => jadge(waka.id)}
+                    >
+                      <MagicCard
+                        className={` grid place-content-center whitespace-nowrap text-4xl shadow-2xl ${
+                          isCorrect ? ' opacity-25' : 'cursor-pointer'
                         }`}
+                        gradientColor={
+                          theme === 'dark' ? '#262626' : '#D9D9D955'
+                        }
                       >
-                        <p>{shimonoku1}</p>
-                        <p>{shimonoku2}</p>
-                      </li>
+                        <div className="writing-vertical p-8">
+                          <p>{shimonoku1}</p>
+                          <p>{shimonoku2}</p>
+                        </div>
+                      </MagicCard>
                     </DrawerTrigger>
                     <DrawerContent>
                       <DrawerHeader>
@@ -227,16 +229,7 @@ export const GameBoard = () => {
                         <DrawerDescription className="text-center mb-4">
                           選んだ歌
                         </DrawerDescription>
-                        <div className="writing-vertical mx-auto h-40">
-                          <p>{kaminoku1}</p>
-                          <p>{kaminoku2}</p>
-                          <p>{kaminoku3}</p>
-                          <p>{shimonoku1}</p>
-                          <p>{shimonoku2}</p>
-                          <p className="text-right mr-4">
-                            作者 {waka.nameKanji}
-                          </p>
-                        </div>
+                        <WakaDetails waka={waka} />
                       </DrawerHeader>
                       <DrawerFooter>
                         <DrawerClose
@@ -255,7 +248,7 @@ export const GameBoard = () => {
                   </Drawer>
                 );
               })}
-          </ul>
+          </div>
         </>
       )}
     </div>

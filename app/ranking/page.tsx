@@ -15,11 +15,9 @@ export default async function RankingPage() {
   });
   const dehydratedState = dehydrate(queryClient);
   return (
-    <div>
+    <div className="container mx-auto p-4">
       <HydrationBoundary state={dehydratedState}>
-        <div>
-          <Ranking />
-        </div>
+        <Ranking />
       </HydrationBoundary>
     </div>
   );

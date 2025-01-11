@@ -14,3 +14,8 @@ export type User = {
   name: string;
   score: number;
 };
+
+type SearchResponse = {
+  data: Waka[];
+  hitCount: number;
+};
