@@ -19,7 +19,7 @@ import FlipText from '@/components/ui/flip-text';
 import { Timer } from '@/utils/timer';
 import { WakaDetails } from './WakaDetails';
 import { useTheme } from 'next-themes';
-
+import confetti from 'canvas-confetti';
 import { MagicCard } from '@/components/ui/magic-card';
 import RippleButton from '@/components/ui/ripple-button';
 
@@ -106,6 +106,7 @@ export const GameBoard = () => {
     setIsAnimating(false);
 
     if (readingOrder && id === readingOrder[currentIndex].id) {
+      confetti();
       const timeBonus = calculateTimeBonus(timeInSeconds);
       setResult('正解！');
       setScore((prev) => prev + timeBonus);
@@ -145,112 +146,117 @@ export const GameBoard = () => {
   };
 
   return (
-    <div className="container mx-auto">
-      <RippleButton rippleColor="#ADD8E6" onClick={handleStart}>
+    <div className="container mx-auto p-4">
+      <RippleButton
+        rippleColor="#FFFFFF"
+        onClick={handleStart}
+        className="button accent-button mx-auto mb-8"
+      >
         {isGameStarted ? 'Restart' : 'Start'}
       </RippleButton>
-      <RippleButton rippleColor="#ADD8E6">ripple</RippleButton>
 
-      {isGameStarted && wakas && (
-        <>
-          <div className="flex flex-wrap space-x-4 my-4">
-            {wakas &&
-              wakas.map((_waka, index) => {
-                return (
-                  <div
-                    key={index}
-                    className={`w-8 h-8 border grid place-items-center rounded-full ${
-                      index === currentIndex ? 'border-blue-500' : ''
-                    } ${isIndexCorrect(index) ? 'bg-blue-500 text-white' : ''}`}
+      <div className="md:flex md:justify-between md:items-center">
+        <div className="flex flex-wrap space-x-4 mb-4">
+          {wakas &&
+            wakas.map((_waka, index) => {
+              return (
+                <RippleButton
+                  key={index}
+                  className={`cursor-auto w-12 h-10 rounded-r-3xl rounded-l-none mb-4 ${
+                    index === currentIndex && isGameStarted ? 'pagination' : ''
+                  } ${isIndexCorrect(index) ? 'accent-color text-white' : ''} ${
+                    !isGameStarted ? ' opacity-50' : ''
+                  }`}
+                >
+                  {index + 1}
+                </RippleButton>
+              );
+            })}
+        </div>
+        <div
+          className={`flex justify-end items-center space-x-4 mb-4 ${
+            !isGameStarted ? ' opacity-50' : ''
+          }`}
+        >
+          <div className="text-xl">スコア: {score} 点</div>
+          <div className="text-xl">経過時間: {elapsedTime}</div>
+        </div>
+      </div>
+      <div className="h-24 md:h-16 mb-4">
+        {isAnimating && (
+          <FlipText
+            className="text-xl md:text-2xl"
+            word={
+              readingOrder ? readingOrder[currentIndex]?.bodyKana : 'Loading...'
+            }
+            key={`${isAnimating}`}
+          />
+        )}
+      </div>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
+        {wakas &&
+          wakas.map((waka) => {
+            const shimonoku1 = getShimonoku1(waka.bodyKanji);
+            const shimonoku2 = getShimonoku2(waka.bodyKanji);
+            const isCorrect = correctWakas.has(waka.id);
+            return (
+              <Drawer
+                key={waka.id}
+                onOpenChange={(open) => {
+                  if (!open && isGameEnd) {
+                    handleGameEnd();
+                  } else if (!open && !isGameEnd) {
+                    speak();
+                  }
+                }}
+              >
+                <DrawerTrigger
+                  disabled={isCorrect || isGameEnd || !isGameStarted}
+                  onClick={() => jadge(waka.id)}
+                >
+                  <MagicCard
+                    className={`grid place-content-center whitespace-nowrap text-2xl md:text-4xl shadow-2xl ${
+                      isCorrect || !isGameStarted
+                        ? ' opacity-50'
+                        : 'cursor-pointer'
+                    }`}
+                    gradientColor={theme === 'dark' ? '#262626' : '#D9D9D955'}
                   >
-                    {index + 1}
-                  </div>
-                );
-              })}
-          </div>
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-xl">スコア: {score} 点</div>
-            <div className="text-xl">経過時間: {elapsedTime}</div>
-          </div>
-          <div>
-            {isAnimating && (
-              <FlipText
-                className="text-xl text-black dark:text-white md:text-xl md:leading-[5rem]"
-                word={
-                  readingOrder
-                    ? readingOrder[currentIndex]?.bodyKana
-                    : 'Loading...'
-                }
-                key={`${isAnimating}`}
-              />
-            )}
-          </div>
-          {isGameEnd && <div>Game End</div>}
-          <div className="grid grid-cols-5 gap-8">
-            {wakas &&
-              wakas.map((waka) => {
-                const shimonoku1 = getShimonoku1(waka.bodyKanji);
-                const shimonoku2 = getShimonoku2(waka.bodyKanji);
-                const isCorrect = correctWakas.has(waka.id);
-                return (
-                  <Drawer
-                    key={waka.id}
-                    onOpenChange={(open) => {
-                      if (!open && isGameEnd) {
-                        handleGameEnd();
-                      } else if (!open && !isGameEnd) {
-                        speak();
-                      }
-                    }}
-                  >
-                    <DrawerTrigger
-                      disabled={isCorrect || isGameEnd}
-                      onClick={() => jadge(waka.id)}
-                    >
-                      <MagicCard
-                        className={` grid place-content-center whitespace-nowrap text-4xl shadow-2xl ${
-                          isCorrect ? ' opacity-25' : 'cursor-pointer'
-                        }`}
-                        gradientColor={
-                          theme === 'dark' ? '#262626' : '#D9D9D955'
+                    <div className="writing-vertical p-8">
+                      <p>{shimonoku1}</p>
+                      <p>{shimonoku2}</p>
+                    </div>
+                  </MagicCard>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <DrawerHeader>
+                    <DrawerTitle className="text-3xl text-center m-8">
+                      {result}
+                    </DrawerTitle>
+                    <DrawerDescription className="text-center mb-4">
+                      選んだ歌
+                    </DrawerDescription>
+                  </DrawerHeader>
+                  <WakaDetails waka={waka} />
+                  <DrawerFooter>
+                    <DrawerClose
+                      onClick={() => {
+                        if (isGameEnd) {
+                          handleGameEnd();
+                        } else {
+                          speak();
                         }
-                      >
-                        <div className="writing-vertical p-8">
-                          <p>{shimonoku1}</p>
-                          <p>{shimonoku2}</p>
-                        </div>
-                      </MagicCard>
-                    </DrawerTrigger>
-                    <DrawerContent>
-                      <DrawerHeader>
-                        <DrawerTitle className="text-3xl text-center m-8">
-                          {result}
-                        </DrawerTitle>
-                        <DrawerDescription className="text-center mb-4">
-                          選んだ歌
-                        </DrawerDescription>
-                        <WakaDetails waka={waka} />
-                      </DrawerHeader>
-                      <DrawerFooter>
-                        <DrawerClose
-                          onClick={() => {
-                            if (isGameEnd) {
-                              handleGameEnd();
-                            } else {
-                              speak();
-                            }
-                          }}
-                        >
-                          次の歌へ
-                        </DrawerClose>
-                      </DrawerFooter>
-                    </DrawerContent>
-                  </Drawer>
-                );
-              })}
-          </div>
-        </>
-      )}
+                      }}
+                      className="button accent-button w-fit mx-auto my-4"
+                    >
+                      次の歌へ
+                    </DrawerClose>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>
+            );
+          })}
+      </div>
     </div>
   );
 };

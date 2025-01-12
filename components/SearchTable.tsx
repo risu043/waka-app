@@ -14,7 +14,9 @@ import {
   DialogTrigger,
   DialogClose,
 } from '@/components/ui/dialog';
+import RippleButton from '@/components/ui/ripple-button';
 import Pagination from '@/components/Pagination';
+import { WakaSkeleton } from '@/components/WakaSkeleton';
 
 export default function SearchTable({
   filter,
@@ -31,7 +33,15 @@ export default function SearchTable({
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="space-y-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-6">
+          {[...Array(10)].map((_, index) => (
+            <WakaSkeleton key={index} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
@@ -42,7 +52,7 @@ export default function SearchTable({
     );
   }
 
-  if (!data) {
+  if (!data || data.data.length === 0) {
     return (
       <div className="text-center text-muted-foreground">No markers found</div>
     );
@@ -71,7 +81,9 @@ export default function SearchTable({
                 </DialogHeader>
                 <WakaDetails waka={waka} />
                 <DialogClose asChild>
-                  <button>Close</button>
+                  <RippleButton className="button accent-button w-fit mx-auto mt-4">
+                    Close
+                  </RippleButton>
                 </DialogClose>
               </DialogContent>
             </Dialog>

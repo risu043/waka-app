@@ -9,9 +9,9 @@ export const Header = () => {
   const { theme, setTheme } = useTheme();
   return (
     <header>
-      <div className="mx-auto w-fit flex flex-col items-center">
+      <div className="mx-auto w-fit flex flex-col items-center mb-16">
         <Link href="/">
-          <h1 className="text-4xl writing-vertical base-color px-8 py-4 shadow-xl">
+          <h1 className="text-4xl writing-vertical base-color p-8 shadow-xl">
             <span className="mb-1">百</span>人一首
           </h1>
         </Link>

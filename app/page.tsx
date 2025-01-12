@@ -15,12 +15,10 @@ export default async function Home() {
   });
   const dehydratedState = dehydrate(queryClient);
   return (
-    <div>
+    <>
       <HydrationBoundary state={dehydratedState}>
-        <div>
-          <GameBoard />
-        </div>
+        <GameBoard />
       </HydrationBoundary>
-    </div>
+    </>
   );
 }

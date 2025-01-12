@@ -113,4 +113,32 @@ body {
   .dark .base-color {
     background-color: #000000;
   }
+
+  .button {
+    color: white;
+    border: 3px solid white;
+    border-radius: 0px;
+    outline-offset: 0;
+    padding: 0.75rem 2.5rem;
+  }
+  .accent-button {
+    background-color: #be123c;
+    outline: 3px solid #be123c;
+  }
+  .dark .accent-button {
+    background-color: #164e63;
+    outline: 3px solid #164e63;
+  }
+  .accent-color {
+    background-color: #be123c;
+  }
+  .dark .accent-color {
+    background-color: #164e63;
+  }
+  .pagination {
+    border: 2px solid #be123c;
+  }
+  .dark .pagination {
+    border: 2px solid #164e63;
+  }
 }

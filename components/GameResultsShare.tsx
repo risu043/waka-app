@@ -1,28 +1,51 @@
 'use client';
 
 import Image from 'next/image';
-import ShareButton from './ShareButton';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
+import ShareButton from '@/components/ShareButton';
+import { Loader2 } from 'lucide-react';
+import { ConfettiFireworks } from '@/utils/confetiFireWorks';
 
 interface GameResultsShareProps {
   name: string;
   score: number;
 }
 
-export default function GameResultsShare({
+export default function GameResultsShareContent({
   name,
   score,
 }: GameResultsShareProps) {
+  const [isLoading, setIsLoading] = useState(true);
   const imageUrl = `/api/og?name=${name}&score=${score}`;
   const text = `百人一首 | ${name}さんのスコアは${score}点です！`;
+
+  const handleConfetti = () => {
+    setIsLoading(false);
+    ConfettiFireworks();
+  };
+
   return (
-    <div className="relative min-h-screen">
-      <div>
-        <h1>クリアの記録</h1>
-        <p>Your name: {name}</p>
-        <p>Your score: {score}</p>
-        <Image src={imageUrl} width={1200} height={630} alt="クリア画像" />
+    <div className="mt-6">
+      {isLoading && (
+        <div className="flex justify-center items-center h-60">
+          <Loader2 className="w-8 h-8 animate-spin" />
+        </div>
+      )}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.5 }}
+      >
+        <Image
+          src={imageUrl}
+          width={1200}
+          height={630}
+          alt="クリア画像"
+          onLoadingComplete={() => handleConfetti()}
+        />
         <ShareButton text={text} />
-      </div>
+      </motion.div>
     </div>
   );
 }

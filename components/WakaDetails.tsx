@@ -18,13 +18,14 @@ export const WakaDetails = ({ waka }: { waka: Waka }) => {
   const shimonoku2 = getShimonoku2(waka.bodyKanji);
 
   return (
-    <div className="writing-vertical mx-auto h-40">
+    <div className="writing-vertical mx-auto h-60 text-2xl">
       <p>{kaminoku1}</p>
       <p>{kaminoku2}</p>
       <p>{kaminoku3}</p>
       <p>{shimonoku1}</p>
       <p>{shimonoku2}</p>
-      <p className="text-right mr-4">作者 {waka.nameKanji}</p>
+      <p className="mr-4">作者</p>
+      <p>{waka.nameKanji}</p>
     </div>
   );
 };

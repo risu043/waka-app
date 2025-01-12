@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
@@ -9,18 +10,19 @@ export default function EnhancedSearch() {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function handleSearchInput(term: string) {
+  const handleSearchInput = useDebouncedCallback((term: string): void => {
     const params = new URLSearchParams(searchParams);
     if (term) {
+      console.log(term);
       params.set('filter', term);
     } else {
       params.delete('filter');
     }
     params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
 
-  function handleSearchAuthor(term: string) {
+  const handleSearchAuthor = useDebouncedCallback((term: string): void => {
     const params = new URLSearchParams(searchParams);
     if (term !== 'all') {
       params.set('author', term);
@@ -29,7 +31,7 @@ export default function EnhancedSearch() {
     }
     params.set('page', '1');
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
 
   return (
     <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto p-4 mb-4">

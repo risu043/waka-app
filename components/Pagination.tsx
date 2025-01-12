@@ -39,7 +39,7 @@ export default function Pagination({ hitCount }: PaginationProps) {
   };
 
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 mx-auto w-fit">
       <button
         onClick={handlePrevPageClick}
         disabled={currentPage === 1}
@@ -50,18 +50,18 @@ export default function Pagination({ hitCount }: PaginationProps) {
         <ChevronLeft className="h-4 w-4" />
       </button>
 
-      <ul className="flex space-x-4">
+      <ul className="flex flex-wrap space-x-4">
         {Array.from({ length: totalPages }, (_, index) => (
           <li key={index}>
             {currentPage === index + 1 ? (
-              <span className="block grid place-items-center w-8 h-8 rounded-full bg-blue-500 text-white">
+              <RippleButton className="cursor-auto w-8 h-8 rounded-full text-white accent-color pagination">
                 {index + 1}
-              </span>
+              </RippleButton>
             ) : (
               <RippleButton
                 rippleColor="#ADD8E6"
                 onClick={() => handleButtonPageClick(index)}
-                className="w-8 h-8 border rounded-full"
+                className="w-8 h-8 rounded-full pagination"
               >
                 {index + 1}
               </RippleButton>

@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { Yuji_Syuku } from 'next/font/google';
 import './globals.css';
-import Providers from '@/app/providers';
-import { ThemeProvider } from '@/components/Theme-provider';
+import Provider from '@/components/Provider';
 import { Header } from '@/components/Header';
 
 const yujiSyuku = Yuji_Syuku({
@@ -45,16 +44,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${yujiSyuku.variable} antialiased ichimatsu font-yuji-syuku`}
       >
-        <Providers>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            <Header />
-            <main>{children}</main>
-          </ThemeProvider>
-        </Providers>
+        <Provider attribute="class" defaultTheme="system" enableSystem>
+          <Header />
+          <main>{children}</main>
+        </Provider>
       </body>
     </html>
   );

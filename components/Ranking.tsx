@@ -67,7 +67,7 @@ export const Ranking = () => {
         <CardTitle className="text-2xl font-bold text-center">
           <span className="relative inline-block">
             Ranking
-            <Trophy className="absolute -top-3 -right-8 h-8 w-8 text-yellow-500 transform rotate-12" />
+            <Trophy className="absolute -top-3 -right-10 h-8 w-8 text-yellow-500 transform rotate-12" />
           </span>
         </CardTitle>
       </CardHeader>
