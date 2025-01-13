@@ -7,11 +7,11 @@ import RippleButton from '@/components/ui/ripple-button';
 
 type PaginationProps = {
   hitCount: number;
+  pageVolume: number;
 };
 
-export default function Pagination({ hitCount }: PaginationProps) {
+export default function Pagination({ hitCount, pageVolume }: PaginationProps) {
   const { replace } = useRouter();
-  const pageVolume = 10;
 
   const totalPages = Math.ceil(hitCount / pageVolume);
 

@@ -13,6 +13,12 @@ export type User = {
   id: number;
   name: string;
   score: number;
+  rank: number;
+};
+
+export type UserResponse = {
+  usersWithRank: User[];
+  hitCount: number;
 };
 
 type SearchResponse = {

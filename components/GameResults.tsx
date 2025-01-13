@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { Loader2, Trophy, User, Send } from 'lucide-react';
+import { Loader2, Trophy, Send } from 'lucide-react';
+import { User } from '@/type';
 import { createUser } from '@/app/users';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -34,11 +35,13 @@ export default function GameResult() {
         name: name,
         score: gameResult?.score ?? 0,
       }),
-    onSuccess: () => {
+    onSuccess: (data: User) => {
       queryClient.invalidateQueries({
         queryKey: ['fetchUsers'],
       });
-      router.push(`game_end/share?name=${name}&score=${gameResult?.score}`);
+      router.push(
+        `game_end/share?name=${name}&score=${gameResult?.score}&rank=${data.rank}`
+      );
     },
     onError: (error) => {
       console.error('エラーが発生しました:', error);
@@ -84,7 +87,6 @@ export default function GameResult() {
             </div>
             <form onSubmit={handleFormSubmit} className="space-y-8">
               <div className="flex items-center space-x-2">
-                <User className="w-5 h-5 text-gray-400" />
                 <Input
                   type="text"
                   placeholder="お名前"

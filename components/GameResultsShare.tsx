@@ -10,15 +10,17 @@ import { ConfettiFireworks } from '@/utils/confetiFireWorks';
 interface GameResultsShareProps {
   name: string;
   score: number;
+  rank: number;
 }
 
 export default function GameResultsShareContent({
   name,
   score,
+  rank,
 }: GameResultsShareProps) {
   const [isLoading, setIsLoading] = useState(true);
-  const imageUrl = `/api/og?name=${name}&score=${score}`;
-  const text = `百人一首 | ${name}さんのスコアは${score}点です！`;
+  const imageUrl = `/api/og?name=${name}&score=${score}&rank=${rank}`;
+  const text = `百人一首 | ${name}さんのスコアは${score}点！${rank}位にランクインしました`;
 
   const handleConfetti = () => {
     setIsLoading(false);
@@ -42,7 +44,7 @@ export default function GameResultsShareContent({
           width={1200}
           height={630}
           alt="クリア画像"
-          onLoadingComplete={() => handleConfetti()}
+          onLoad={() => handleConfetti()}
         />
         <ShareButton text={text} />
       </motion.div>

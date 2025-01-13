@@ -90,7 +90,7 @@ export default function SearchTable({
           </div>
         ))}
       </div>
-      <Pagination hitCount={data.hitCount} />
+      <Pagination hitCount={data.hitCount} pageVolume={10} />
     </div>
   );
 }

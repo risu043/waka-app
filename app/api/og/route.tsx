@@ -11,6 +11,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const name = searchParams.get('name');
     const score = searchParams.get('score');
+    const rank = searchParams.get('rank');
     const fontData = await font;
 
     const baseStyles = {
@@ -42,7 +43,7 @@ export async function GET(request: Request) {
       color: 'rgb(117, 98, 85)',
       lineHeight: '1',
       marginBottom: name && score ? '40px' : '0',
-    };
+    } as const;
 
     const content = (
       <div style={baseStyles as React.CSSProperties}>
@@ -79,38 +80,74 @@ export async function GET(request: Request) {
         </svg>
 
         <div
-          style={
-            {
-              ...titleContainer,
-              position: 'relative',
-              zIndex: 1,
-            } as React.CSSProperties
-          }
+          style={{
+            ...titleContainer,
+            position: 'relative',
+          }}
         >
           {'百人一首'.split('').map((char, index) => (
             <span key={index}>{char}</span>
           ))}
         </div>
 
-        {name && score && (
+        {name && score && rank && (
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '5px',
+              gap: '20px',
               fontFamily: 'Yuji Syuku',
               marginBottom: '200px',
-              lineHeight: '1',
               position: 'relative',
-              zIndex: 1,
+              transform: 'translateY(-40px)',
             }}
           >
-            <p style={{ margin: '0', padding: '0', fontSize: '60px' }}>
-              {name}さんのスコアは
-            </p>
-            <p style={{ margin: '0', padding: '0' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                fontSize: '60px',
+                lineHeight: '1.2',
+                transform: 'translateY(20px)',
+              }}
+            >
+              <span>{name}さんのスコアは</span>
+              <span
+                style={{
+                  backgroundImage:
+                    'linear-gradient(90deg, rgb(255, 101, 77), rgb(249, 203, 40))',
+                  backgroundClip: 'text',
+                  color: 'transparent',
+                  marginLeft: '10px',
+                  marginRight: '5px',
+                  fontSize: '80px',
+                  transform: 'translate(2px, -2px)',
+                }}
+              >
+                {score}
+              </span>
+              <span
+                style={{
+                  color: 'rgb(249, 203, 40)',
+                  fontSize: '40px',
+                  transform: 'translateY(1px)',
+                }}
+              >
+                点
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'baseline',
+                justifyContent: 'center',
+                fontSize: '60px',
+                lineHeight: '1.2',
+              }}
+            >
               <span
                 style={{
                   backgroundImage:
@@ -119,33 +156,22 @@ export async function GET(request: Request) {
                   color: 'transparent',
                   marginRight: '5px',
                   fontSize: '80px',
-                  fontFamily: 'Yuji Syuku',
+                  transform: 'translate(2px, -2px)',
                 }}
               >
-                {score}
+                {rank}
               </span>
               <span
                 style={{
                   color: 'rgb(249, 203, 40)',
                   marginRight: '10px',
                   fontSize: '40px',
-                  marginTop: '40px',
-                  fontFamily: 'Yuji Syuku',
                 }}
               >
-                点
+                位
               </span>
-              <span
-                style={{
-                  marginRight: '5px',
-                  marginTop: '20px',
-                  fontSize: '60px',
-                  fontFamily: 'Yuji Syuku',
-                }}
-              >
-                です！
-              </span>
-            </p>
+              <span>にランクインしました！</span>
+            </div>
           </div>
         )}
       </div>

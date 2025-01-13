@@ -36,7 +36,6 @@ export const searchWakas = async ({
     }
 
     const data: SearchResponse = await res.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error('Error in fetchWakas:', error);

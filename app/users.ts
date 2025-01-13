@@ -1,18 +1,23 @@
-import type { User } from '@/type';
+import type { User, UserResponse } from '@/type';
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
 
-export const fetchUsers = async () => {
+export const fetchUsers = async ({
+  page,
+}: {
+  page: number;
+}): Promise<UserResponse> => {
   try {
-    const res = await fetch(`${baseUrl}/api/user`);
+    const res = await fetch(`${baseUrl}/api/user?page=${page}`);
     if (!res.ok) {
-      throw new Error(`Failed to fetchWakas: ${res.status}`);
+      throw new Error(`Failed to fetchUsers: ${res.status}`);
     }
 
-    const user: User[] = await res.json();
-    return user;
+    const data: UserResponse = await res.json();
+    console.log(data);
+    return data;
   } catch (error) {
-    console.error('Error in fetchWakas:', error);
+    console.error('Error in fetchUsers:', error);
     throw error;
   }
 };
@@ -20,7 +25,7 @@ export const fetchUsers = async () => {
 export const createUser = async ({
   name,
   score,
-}: Omit<User, 'id'>): Promise<User> => {
+}: Omit<User, 'id' | 'rank'>): Promise<User> => {
   try {
     const res = await fetch(`${baseUrl}/api/user`, {
       method: 'POST',

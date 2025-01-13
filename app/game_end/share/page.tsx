@@ -12,11 +12,13 @@ export default async function Page(props: {
   searchParams?: Promise<{
     name?: string;
     score?: string;
+    rank?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
+  const rank = Number(searchParams?.rank) || 0;
   return (
     <div className="container mx-auto max-w-5xl p-4">
       <Card className="w-full">
@@ -28,8 +30,9 @@ export default async function Page(props: {
           <div className="mx-auto w-fit">
             <p>Your name: {name}</p>
             <p>Your score: {score}</p>
+            <p>Your rank: {rank}</p>
           </div>
-          <GameResultsShare name={name} score={score} />
+          <GameResultsShare name={name} score={score} rank={rank} />
         </CardContent>
         <CardFooter></CardFooter>
       </Card>
