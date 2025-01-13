@@ -128,19 +128,29 @@ export const GameBoard = () => {
     router.push('/game_end');
   };
 
-  const utterance = new SpeechSynthesisUtterance();
+  let utterance: SpeechSynthesisUtterance | null = null;
+
+  // ブラウザ環境でのみインスタンスを初期化
+  if (typeof window !== 'undefined') {
+    utterance = new SpeechSynthesisUtterance();
+  }
 
   const speak = () => {
     if (readingOrder && readingOrder[currentIndex]) {
       setTimeout(() => {
         setIsAnimating(true);
-
-        utterance.text = readingOrder[currentIndex].bodyKana;
-        utterance.lang = 'ja-JP';
-        utterance.pitch = 1;
-        utterance.rate = 0.4;
-        utterance.volume = 1;
-        speechSynthesis.speak(utterance);
+        if (utterance) {
+          utterance.text = readingOrder[currentIndex].bodyKana;
+          utterance.lang = 'ja-JP';
+          utterance.pitch = 1;
+          utterance.rate = 0.4;
+          utterance.volume = 1;
+          speechSynthesis.speak(utterance);
+        } else {
+          console.error(
+            'SpeechSynthesisUtterance is not supported in this environment.'
+          );
+        }
       }, 0);
     }
   };
