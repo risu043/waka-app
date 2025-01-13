@@ -10,32 +10,23 @@ const yujiSyuku = Yuji_Syuku({
   variable: '--font-yuji-syuku',
 });
 
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { name?: string; score?: string; rank?: string };
-}): Promise<Metadata> {
-  const name = searchParams?.name || '';
-  const score = Number(searchParams?.score) || 0;
-  const rank = Number(searchParams?.rank) || 0;
-  return {
+export const metadata: Metadata = {
+  title: '百人一首',
+  description: '百人一首で遊べるアプリです',
+  openGraph: {
     title: '百人一首',
     description: '百人一首で遊べるアプリです',
-    openGraph: {
-      title: '百人一首',
-      description: '百人一首で遊べるアプリです',
-      url: process.env.NEXT_PUBLIC_VERCEL_URL,
-      images: [
-        {
-          url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?name=${name}&score=${score}&rank=${rank}`,
-          width: 1200,
-          height: 630,
-          alt: 'OGP Image for 百人一首',
-        },
-      ],
-    },
-  };
-}
+    url: process.env.NEXT_PUBLIC_VERCEL_URL,
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og`,
+        width: 1200,
+        height: 630,
+        alt: 'OGP Image for 百人一首',
+      },
+    ],
+  },
+};
 
 export default function RootLayout({
   children,
