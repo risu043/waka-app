@@ -17,9 +17,9 @@ export const Header = () => {
         </Link>
         <nav>
           <ul className="flex space-x-4 p-4 text-xl">
-            <li>
+            {/* <li>
               <Link href="/about">about</Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/ranking">raking</Link>
             </li>
