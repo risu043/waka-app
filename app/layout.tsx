@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: '百人一首',
     description: '百人一首で遊べるアプリです',
-    url: process.env.NEXT_PUBLIC_VERCEL_URL,
+    url: process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000',
     images: [
       {
-        url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og`,
+        url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/image/og.png`,
         width: 1200,
         height: 630,
         alt: 'OGP Image for 百人一首',
