@@ -11,8 +11,8 @@ export const Header = () => {
     <header>
       <div className="mx-auto w-fit flex flex-col items-center mb-16">
         <Link href="/" className="flex justify-center">
-          <h1 className="text-4xl base-color p-8 shadow-xl">
-            <span className="writing-vertical inline-block">
+          <h1 className="text-4xl base-color p-8 shadow-xl flex justify-center">
+            <span className="writing-vertical">
               <span className="mb-1">百</span>人一首
             </span>
           </h1>
@@ -23,7 +23,7 @@ export const Header = () => {
               <Link href="/about">about</Link>
             </li>
             <li>
-              <Link href="/ranking">raking</Link>
+              <Link href="/ranking">ranking</Link>
             </li>
             <li>
               <Link href="/search">search</Link>
