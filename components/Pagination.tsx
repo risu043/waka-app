@@ -52,16 +52,16 @@ export default function Pagination({ hitCount, pageVolume }: PaginationProps) {
 
       <ul className="flex flex-wrap space-x-4">
         {Array.from({ length: totalPages }, (_, index) => (
-          <li key={index}>
+          <li key={index} className="mb-4">
             {currentPage === index + 1 ? (
-              <RippleButton className="cursor-auto w-8 h-8 rounded-full text-white accent-color pagination">
+              <RippleButton className="cursor-auto w-10 h-10 rounded-full text-white accent-color pagination">
                 {index + 1}
               </RippleButton>
             ) : (
               <RippleButton
-                rippleColor="#ADD8E6"
+                rippleColor="#dddddd"
                 onClick={() => handleButtonPageClick(index)}
-                className="w-8 h-8 rounded-full pagination"
+                className="w-10 h-10 rounded-full pagination"
               >
                 {index + 1}
               </RippleButton>

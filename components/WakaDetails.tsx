@@ -24,8 +24,7 @@ export const WakaDetails = ({ waka }: { waka: Waka }) => {
       <p>{kaminoku3}</p>
       <p>{shimonoku1}</p>
       <p>{shimonoku2}</p>
-      <p className="mr-4">作者</p>
-      <p>{waka.nameKanji}</p>
+      <p className="mr-4">作者 {waka.nameKanji}</p>
     </div>
   );
 };

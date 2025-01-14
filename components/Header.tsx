@@ -10,9 +10,11 @@ export const Header = () => {
   return (
     <header>
       <div className="mx-auto w-fit flex flex-col items-center mb-16">
-        <Link href="/">
-          <h1 className="text-4xl writing-vertical base-color p-8 shadow-xl">
-            <span className="mb-1">百</span>人一首
+        <Link href="/" className="flex justify-center">
+          <h1 className="text-4xl base-color p-8 shadow-xl">
+            <span className="writing-vertical inline-block">
+              <span className="mb-1">百</span>人一首
+            </span>
           </h1>
         </Link>
         <nav>

@@ -1,9 +1,21 @@
 'use client';
 
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import RippleButton from '@/components/ui/ripple-button';
+import { VolumeIcon as VolumeUp, ArrowLeft } from 'lucide-react';
+
 export default function AboutPage() {
+  const router = useRouter();
+
+  const handleNavigation = () => {
+    router.push('/');
+  };
+
   let utterance: SpeechSynthesisUtterance | null = null;
 
-  // ブラウザ環境でのみインスタンスを初期化
   if (typeof window !== 'undefined') {
     utterance = new SpeechSynthesisUtterance();
   }
@@ -23,11 +35,118 @@ export default function AboutPage() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
-    <div>
-      <h1>About</h1>
-      <p>This is the about page</p>
-      <button onClick={speakTest}>test</button>
+    <div className="container mx-auto p-4 max-w-4xl">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="space-y-8"
+      >
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-center">
+                遊び方
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Image
+                src="/image/about01.png"
+                width={1000}
+                height={500}
+                alt="遊び方"
+                priority
+                className="rounded-lg shadow-md"
+              />
+              <p className="text-lg">
+                ブラウザ上で百人一首が遊べるアプリです！
+              </p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li>
+                  100首から10首がランダムに選ばれ、その下の句の札がゲーム画面に並んでいます。
+                </li>
+                <li>
+                  Startボタンを押すと、パソコンが1首ずつ読み札を読みあげます。
+                </li>
+                <li>これだ！と思う札をクリックしてください。</li>
+                <li>判定が終わると、パソコンが次の読み札を読み上げます。</li>
+                <li>
+                  読み上げにはWeb Speech
+                  APIを使用しており、firefox以外のブラウザで対応しています。
+                </li>
+              </ul>
+              <RippleButton
+                rippleColor="#FFFFFF"
+                onClick={speakTest}
+                className="button accent-button mb-8 mx-auto"
+              >
+                <span className="flex items-center">
+                  <VolumeUp className="mr-2 h-4 w-4" />
+                  <span>テスト音声を出力します</span>
+                </span>
+              </RippleButton>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-3xl font-bold text-center">
+                ランキング
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Image
+                src="/image/about02.png"
+                width={1000}
+                height={500}
+                alt="ランキング"
+                priority
+                className="rounded-lg shadow-md"
+              />
+              <ul className="list-disc pl-5 space-y-2">
+                <li>10首目の判定が終わるとクリア画面に移動します。</li>
+                <li>
+                  ニックネームを入力して送信すると、ランキング画面に掲載されます。
+                </li>
+                <li>
+                  速くクリアする程スコアが加算されます。是非遊んでみてください！
+                </li>
+              </ul>
+              <RippleButton
+                rippleColor="#FFFFFF"
+                onClick={handleNavigation}
+                className="button accent-button mb-8 mx-auto"
+              >
+                <span className="flex items-center">
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  <span>トップページに戻る</span>
+                </span>
+              </RippleButton>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }

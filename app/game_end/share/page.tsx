@@ -29,7 +29,7 @@ export async function generateMetadata(props: {
       url: process.env.NEXT_PUBLIC_VERCEL_URL,
       images: [
         {
-          url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?name=${name}&score=${score}&rank=${rank}}`,
+          url: `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?name=${name}&score=${score}&rank=${rank}`,
           width: 1200,
           height: 630,
           alt: 'OGP Image for 百人一首',

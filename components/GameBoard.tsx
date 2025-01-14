@@ -20,15 +20,18 @@ import { Timer } from '@/utils/timer';
 import { WakaDetails } from './WakaDetails';
 import { useTheme } from 'next-themes';
 import confetti from 'canvas-confetti';
+import { Loader2 } from 'lucide-react';
 import { MagicCard } from '@/components/ui/magic-card';
 import RippleButton from '@/components/ui/ripple-button';
 
 export const GameBoard = () => {
-  const { data: { wakas, readingOrder } = { wakas: [], readingOrder: [] } } =
-    useQuery({
-      queryKey: ['fetchWakas'],
-      queryFn: fetchWakas,
-    });
+  const {
+    data: { wakas, readingOrder } = { wakas: [], readingOrder: [] },
+    isLoading,
+  } = useQuery({
+    queryKey: ['fetchWakas'],
+    queryFn: fetchWakas,
+  });
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -155,8 +158,16 @@ export const GameBoard = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-60">
+        <Loader2 className="w-8 h-8 animate-spin" />
+      </div>
+    );
+  }
+
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 max-w-screen-xl">
       <RippleButton
         rippleColor="#FFFFFF"
         onClick={handleStart}
