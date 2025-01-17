@@ -3,6 +3,7 @@ import { Yuji_Syuku } from 'next/font/google';
 import './globals.css';
 import Provider from '@/components/Provider';
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const yujiSyuku = Yuji_Syuku({
   weight: '400',
@@ -41,6 +42,7 @@ export default function RootLayout({
         <Provider attribute="class" defaultTheme="system" enableSystem>
           <Header />
           <main>{children}</main>
+          <Footer />
         </Provider>
       </body>
     </html>

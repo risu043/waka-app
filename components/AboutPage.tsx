@@ -6,6 +6,12 @@ import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import RippleButton from '@/components/ui/ripple-button';
 import { VolumeIcon as VolumeUp, ArrowLeft } from 'lucide-react';
+import { Shippori_Mincho } from 'next/font/google';
+
+const shipporiMincho = Shippori_Mincho({
+  weight: ['400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+});
 
 export default function AboutPage() {
   const router = useRouter();
@@ -54,7 +60,9 @@ export default function AboutPage() {
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-4xl">
+    <div
+      className={`${shipporiMincho.className} container mx-auto p-4 max-w-4xl text-xl`}
+    >
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -77,22 +85,19 @@ export default function AboutPage() {
                 priority
                 className="rounded-lg shadow-md"
               />
-              <p className="text-lg">
+              <p className="text-2xl">
                 ブラウザ上で百人一首が遊べるアプリです！
               </p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
-                  100首から10首がランダムに選ばれ、その下の句の札がゲーム画面に並んでいます。
+                  100首からランダムに10首が選ばれ、その下の句がゲーム画面に表示されます。
                 </li>
                 <li>
                   Startボタンを押すと、パソコンが1首ずつ読み札を読みあげます。
                 </li>
                 <li>これだ！と思う札をクリックしてください。</li>
                 <li>判定が終わると、パソコンが次の読み札を読み上げます。</li>
-                <li>
-                  読み上げにはWeb Speech
-                  APIを使用しており、firefox以外のブラウザで対応しています。
-                </li>
+                <li>読み上げにはWeb Speech APIを使用しています。</li>
               </ul>
               <RippleButton
                 rippleColor="#FFFFFF"

@@ -83,19 +83,6 @@ body {
 }
 
 @layer utilities {
-  /* .ichimatsu {
-    background: conic-gradient(
-          #e1e1e1 0.25turn,
-          #bdbdbd 0.25turn 0.5turn,
-          #e1e1e1 0.5turn 0.75turn,
-          #bdbdbd 0.75turn
-        )
-        top left / 40px 40px repeat,
-      linear-gradient(180deg, rgb(255, 255, 80), rgb(255, 145, 50)) top / 100%
-        100vh fixed;
-    background-blend-mode: screen;
-    background-attachment: fixed;
-  } */
   .ichimatsu {
     position: relative;
   }
@@ -119,18 +106,6 @@ body {
     background-blend-mode: screen;
   }
 
-  /* .dark .ichimatsu {
-    background: conic-gradient(
-          #e1e1e1 0.25turn,
-          #bdbdbd 0.25turn 0.5turn,
-          #e1e1e1 0.5turn 0.75turn,
-          #bdbdbd 0.75turn
-        )
-        top left / 40px 40px repeat,
-      linear-gradient(180deg, rgb(53, 98, 104), rgb(58, 41, 85)) top / 100%
-        100vh fixed;
-    background-blend-mode: color-burn;
-  } */
   .dark .ichimatsu {
     position: relative;
   }
@@ -150,8 +125,7 @@ body {
           #bdbdbd 0.75turn
         )
         top left / 40px 40px repeat,
-      linear-gradient(180deg, rgb(53, 98, 104), rgb(58, 41, 85)) top / 100%
-        100vh fixed;
+      linear-gradient(180deg, rgb(53, 98, 104), rgb(58, 41, 85));
     background-blend-mode: color-burn;
   }
 
