@@ -61,7 +61,7 @@ export default function GameResult() {
   if (!gameResult) {
     return (
       <div className="flex justify-center">
-        <Loader2 className="w-8 h-8 animate-spin" />
+        <p className="text-rose-500">エラーが発生しました。</p>
       </div>
     );
   }

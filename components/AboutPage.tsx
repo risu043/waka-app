@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import RippleButton from '@/components/ui/ripple-button';
@@ -15,6 +16,7 @@ const shipporiMincho = Shippori_Mincho({
 
 export default function AboutPage() {
   const router = useRouter();
+  const { theme } = useTheme();
 
   const handleNavigation = () => {
     router.push('/');
@@ -76,7 +78,7 @@ export default function AboutPage() {
                 遊び方
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-12">
               <Image
                 src="/image/about01.png"
                 width={1000}
@@ -85,10 +87,14 @@ export default function AboutPage() {
                 priority
                 className="rounded-lg shadow-md"
               />
-              <p className="text-2xl">
+              <h2
+                className={`text-2xl ${
+                  theme === 'dark' ? 'musubi-dark' : 'musubi'
+                }`}
+              >
                 ブラウザ上で百人一首が遊べるアプリです！
-              </p>
-              <ul className="list-disc pl-5 space-y-2">
+              </h2>
+              <ul className="list-disc pl-5 space-y-2 ml-4">
                 <li>
                   100首からランダムに10首が選ばれ、その下の句がゲーム画面に表示されます。
                 </li>
@@ -129,7 +135,7 @@ export default function AboutPage() {
                 priority
                 className="rounded-lg shadow-md"
               />
-              <ul className="list-disc pl-5 space-y-2">
+              <ul className="list-disc pl-5 space-y-2 ml-4">
                 <li>10首目の判定が終わるとクリア画面に移動します。</li>
                 <li>
                   ニックネームを入力して送信すると、ランキング画面に掲載されます。

@@ -40,9 +40,11 @@ export default function RootLayout({
         className={`${yujiSyuku.variable} antialiased ichimatsu font-yuji-syuku`}
       >
         <Provider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <div id="page">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+          </div>
         </Provider>
       </body>
     </html>

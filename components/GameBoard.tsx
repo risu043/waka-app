@@ -93,7 +93,6 @@ export const GameBoard = () => {
     if (readingOrder && currentIndex < readingOrder.length - 1) {
       setCurrentIndex((prevIndex) => prevIndex + 1);
       timer.reset();
-      timer.start();
     } else {
       setIsGameEnd(true);
       timer.stop();
@@ -141,6 +140,7 @@ export const GameBoard = () => {
   const speak = () => {
     if (readingOrder && readingOrder[currentIndex]) {
       setTimeout(() => {
+        timer.start();
         setIsAnimating(true);
         if (utterance) {
           utterance.text = readingOrder[currentIndex].bodyKana;
@@ -171,7 +171,7 @@ export const GameBoard = () => {
       <RippleButton
         rippleColor="#FFFFFF"
         onClick={handleStart}
-        className="button accent-button mx-auto mb-8"
+        className="button accent-button mx-auto mb-8 text-xl"
       >
         {isGameStarted ? 'Restart' : 'Start'}
       </RippleButton>

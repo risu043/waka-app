@@ -17,7 +17,7 @@ export const Header = () => {
             </span>
           </h1>
         </Link>
-        <nav>
+        <nav className={theme === 'dark' ? 'nav-dark' : 'nav'}>
           <ul className="flex space-x-4 p-4 text-xl">
             <li>
               <Link href="/about">about</Link>
@@ -33,7 +33,7 @@ export const Header = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="ml-4"
+                className="ml-4 hover:bg-amber-100 dark:hover:bg-neutral-900"
               >
                 <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />

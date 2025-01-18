@@ -78,7 +78,7 @@ export const Ranking = ({ page }: { page: number }) => {
             {data.usersWithRank.map((user) => (
               <li
                 key={user.id}
-                className="flex items-center space-x-4 p-3 rounded-lg transition-colors hover:bg-gray-100"
+                className="flex items-center space-x-4 p-3 rounded-lg transition-colors hover:bg-neutral-50 dark:hover:bg-neutral-900"
               >
                 <div className="relative">
                   <span
@@ -89,7 +89,7 @@ export const Ranking = ({ page }: { page: number }) => {
                         ? 'bg-gray-300 text-gray-800'
                         : user.rank === 3
                         ? 'bg-orange-400 text-orange-800'
-                        : 'bg-blue-100 text-blue-800'
+                        : 'bg-neutral-100 text-neutral-800'
                     }`}
                   >
                     {user.rank}
