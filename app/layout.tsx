@@ -33,17 +33,18 @@ export default function RootLayout({
   );
 }
 
-export async function generateMetadata(props: {
-  searchParams?: Promise<{
-    name?: string;
-    score?: string;
-    rank?: string;
-  }>;
-}): Promise<Metadata> {
-  const searchParams = await props.searchParams;
-  const name = searchParams?.name || '';
+type Props = {
+  params: { [key: string]: string | string[] | undefined };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({
+  searchParams,
+}: Props): Promise<Metadata> {
+  const name = (searchParams?.name as string) || '';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
+
   return {
     title: '百人一首',
     description:
