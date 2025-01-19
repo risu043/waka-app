@@ -33,19 +33,19 @@ export default function RootLayout({
   );
 }
 
-export function generateMetadata(props: {
-  searchParams?: {
-    name?: string;
-    score?: string;
-    rank?: string;
-  };
-}): Promise<Metadata> {
-  const searchParams = props.searchParams;
-  const name = searchParams?.name || '';
-  const score = Number(searchParams?.score) || 0;
-  const rank = Number(searchParams?.rank) || 0;
+type GenerateMetadataProps = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({
+  searchParams,
+}: GenerateMetadataProps): Promise<Metadata> {
+  const name = searchParams.name as string | undefined;
+  const score = Number(searchParams.score as string | undefined) || 0;
+  const rank = Number(searchParams.rank as string | undefined) || 0;
   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
-  return Promise.resolve({
+
+  return {
     title: '百人一首',
     description:
       name && score && rank
@@ -67,5 +67,5 @@ export function generateMetadata(props: {
         },
       ],
     },
-  });
+  };
 }
