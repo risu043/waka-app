@@ -33,19 +33,19 @@ export default function RootLayout({
   );
 }
 
-type Props = {
-  params: { [key: string]: string | string[] | undefined };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata({
-  searchParams,
-}: Props): Promise<Metadata> {
-  const name = (searchParams?.name as string) || '';
+export function generateMetadata(props: {
+  searchParams?: {
+    name?: string;
+    score?: string;
+    rank?: string;
+  };
+}): Promise<Metadata> {
+  const searchParams = props.searchParams;
+  const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
-
-  return {
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+  return Promise.resolve({
     title: '百人一首',
     description:
       name && score && rank
@@ -54,18 +54,18 @@ export async function generateMetadata({
     openGraph: {
       title: '百人一首',
       description: '百人一首で遊べるアプリです',
-      url: process.env.NEXT_PUBLIC_VERCEL_URL,
+      url: baseUrl,
       images: [
         {
           url:
             name && score && rank
-              ? `${process.env.NEXT_PUBLIC_VERCEL_URL}/api/og?name=${name}&score=${score}&rank=${rank}`
-              : `${process.env.NEXT_PUBLIC_VERCEL_URL}/image/og.png`,
+              ? `${baseUrl}/api/og?name=${name}&score=${score}&rank=${rank}`
+              : `${baseUrl}/image/og.png`,
           width: 1200,
           height: 630,
           alt: 'OGP Image for 百人一首',
         },
       ],
     },
-  };
+  });
 }
