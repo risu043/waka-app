@@ -8,17 +8,14 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-type SearchParams = {
-  name?: string;
-  score?: string;
-  rank?: string;
-};
-
-type Props = {
-  searchParams: SearchParams;
-};
-
-export default async function Page({ searchParams }: Props) {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    name?: string;
+    score?: string;
+    rank?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
@@ -27,7 +24,7 @@ export default async function Page({ searchParams }: Props) {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Registered!</CardTitle>
-          <CardDescription>Thank you for registering ranking !</CardDescription>
+          <CardDescription>Thank for registering ranking !</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mx-auto w-fit">

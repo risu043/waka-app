@@ -25,11 +25,3 @@ type SearchResponse = {
   data: Waka[];
   hitCount: number;
 };
-
-export type PageProps = {
-  searchParams?: {
-    name?: string;
-    score?: string;
-    rank?: string;
-  };
-};

@@ -6,10 +6,15 @@ import {
 import { fetchWakas } from '@/app/wakas';
 import { GameBoard } from '@/components/GameBoard';
 import type { Metadata } from 'next';
-import { PageProps } from '@/type';
 
-export default async function Home(props: PageProps) {
-  const searchParams = props.searchParams;
+export default async function Home(props: {
+  searchParams?: Promise<{
+    name?: string;
+    score?: string;
+    rank?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
   console.log(searchParams);
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
@@ -27,9 +32,14 @@ export default async function Home(props: PageProps) {
   );
 }
 
-export async function generateMetadata({
-  searchParams,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: {
+  searchParams?: Promise<{
+    name?: string;
+    score?: string;
+    rank?: string;
+  }>;
+}): Promise<Metadata> {
+  const searchParams = await props.searchParams;
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
