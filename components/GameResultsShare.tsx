@@ -20,7 +20,6 @@ export default function GameResultsShareContent({
 }: GameResultsShareProps) {
   const [isLoading, setIsLoading] = useState(true);
   const imageUrl = `/api/og?name=${name}&score=${score}&rank=${rank}`;
-  const text = `百人一首 | ${name}さんのスコアは${score}点！${rank}位にランクインしました`;
 
   const handleConfetti = () => {
     setIsLoading(false);
@@ -46,7 +45,7 @@ export default function GameResultsShareContent({
           alt="クリア画像"
           onLoad={() => handleConfetti()}
         />
-        <ShareButton text={text} />
+        <ShareButton name={name} score={score} rank={rank} />
       </motion.div>
     </div>
   );

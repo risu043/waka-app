@@ -5,11 +5,18 @@ import { Button } from '@/components/ui/button';
 import { FaXTwitter } from 'react-icons/fa6';
 
 interface ShareButtonProps {
-  text?: string;
+  name: string;
+  score: number;
+  rank: number;
 }
 
-const ShareButton: React.FC<ShareButtonProps> = ({ text }) => {
-  const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+const ShareButton: React.FC<ShareButtonProps> = ({ name, score, rank }) => {
+  const text = `百人一首 | ${name}さんのスコアは${score}点！${rank}位にランクインしました`;
+
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+  const url = `${baseUrl}?name=${encodeURIComponent(
+    name
+  )}&score=${score}&rank=${rank}`;
   const shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
     url
   )}${text ? `&text=${encodeURIComponent(text)}` : ''}`;
