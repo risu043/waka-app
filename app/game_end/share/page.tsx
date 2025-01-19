@@ -7,10 +7,18 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { PageProps } from '@/type';
 
-export default async function Page(props: PageProps) {
-  const searchParams = props.searchParams;
+type SearchParams = {
+  name?: string;
+  score?: string;
+  rank?: string;
+};
+
+type Props = {
+  searchParams: SearchParams;
+};
+
+export default async function Page({ searchParams }: Props) {
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
@@ -19,7 +27,7 @@ export default async function Page(props: PageProps) {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Registered!</CardTitle>
-          <CardDescription>Thank for registering ranking !</CardDescription>
+          <CardDescription>Thank you for registering ranking !</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mx-auto w-fit">
