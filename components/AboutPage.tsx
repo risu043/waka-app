@@ -112,7 +112,7 @@ export default function AboutPage() {
               >
                 <span className="flex items-center">
                   <VolumeUp className="mr-2 h-4 w-4" />
-                  <span>テスト音声を出力します</span>
+                  <span>テスト音声を出力</span>
                 </span>
               </RippleButton>
             </CardContent>
@@ -151,7 +151,7 @@ export default function AboutPage() {
               >
                 <span className="flex items-center">
                   <ArrowLeft className="mr-2 h-4 w-4" />
-                  <span>トップページに戻る</span>
+                  <span>トップに戻る</span>
                 </span>
               </RippleButton>
             </CardContent>

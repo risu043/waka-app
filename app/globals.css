@@ -248,15 +248,14 @@ body {
   bottom: 0;
   left: 0;
   content: '';
-  width: 100%;
+  width: 0;
   height: 2px;
   background-color: #be123c;
-  scale: 0;
   transition: 0.4s;
 }
 
 .nav ul li:not(:last-child):hover::before {
-  scale: 1;
+  width: 100%;
 }
 
 .nav-dark ul li {
@@ -268,13 +267,12 @@ body {
   bottom: 0;
   left: 0;
   content: '';
-  width: 100%;
+  width: 0;
   height: 2px;
   background-color: #164e63;
-  scale: 0;
   transition: 0.4s;
 }
 
 .nav-dark ul li:not(:last-child):hover::before {
-  scale: 1;
+  width: 100%;
 }
