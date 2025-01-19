@@ -7,14 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import type { PageProps } from '@/type';
 
-export default async function Page(props: {
-  searchParams?: Promise<{
-    name?: string;
-    score?: string;
-    rank?: string;
-  }>;
-}) {
+export default async function Page(props: PageProps) {
   const searchParams = await props.searchParams;
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;

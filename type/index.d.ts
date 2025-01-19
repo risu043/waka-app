@@ -21,7 +21,17 @@ export type UserResponse = {
   hitCount: number;
 };
 
-type SearchResponse = {
+export type SearchResponse = {
   data: Waka[];
   hitCount: number;
+};
+
+export type SearchParams = {
+  name?: string;
+  score?: string;
+  rank?: string;
+};
+
+export type PageProps = {
+  searchParams?: Promise<SearchParams>;
 };

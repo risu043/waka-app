@@ -6,14 +6,10 @@ import {
 import { fetchWakas } from '@/app/wakas';
 import { GameBoard } from '@/components/GameBoard';
 import type { Metadata } from 'next';
+import type { PageProps } from '@/type';
+import { UrlCleaner } from '@/components/UrlCleaner';
 
-export default async function Home(props: {
-  searchParams?: Promise<{
-    name?: string;
-    score?: string;
-    rank?: string;
-  }>;
-}) {
+export default async function Home(props: PageProps) {
   const searchParams = await props.searchParams;
   console.log(searchParams);
   const queryClient = new QueryClient();
@@ -25,6 +21,7 @@ export default async function Home(props: {
   const dehydratedState = dehydrate(queryClient);
   return (
     <>
+      <UrlCleaner />
       <HydrationBoundary state={dehydratedState}>
         <GameBoard />
       </HydrationBoundary>
@@ -32,13 +29,7 @@ export default async function Home(props: {
   );
 }
 
-export async function generateMetadata(props: {
-  searchParams?: Promise<{
-    name?: string;
-    score?: string;
-    rank?: string;
-  }>;
-}): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
   const searchParams = await props.searchParams;
   const name = searchParams?.name || '';
   const score = Number(searchParams?.score) || 0;
