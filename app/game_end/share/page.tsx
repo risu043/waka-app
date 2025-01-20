@@ -11,7 +11,7 @@ import type { PageProps } from '@/type';
 
 export default async function Page(props: PageProps) {
   const searchParams = await props.searchParams;
-  const name = searchParams?.name || '';
+  const name = searchParams?.name || 'ななし';
   const score = Number(searchParams?.score) || 0;
   const rank = Number(searchParams?.rank) || 0;
   return (

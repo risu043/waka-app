@@ -35,3 +35,9 @@ export type SearchParams = {
 export type PageProps = {
   searchParams?: Promise<SearchParams>;
 };
+
+export type ShareButtonProps = {
+  name: string;
+  score: number;
+  rank: number;
+};

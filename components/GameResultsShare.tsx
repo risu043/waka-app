@@ -46,6 +46,7 @@ export default function GameResultsShareContent({
           onLoad={() => handleConfetti()}
         />
         <ShareButton name={name} score={score} rank={rank} />
+        <ShareButton name={name} score={score} rank={rank} />
       </motion.div>
     </div>
   );
