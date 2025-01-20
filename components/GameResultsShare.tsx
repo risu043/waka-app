@@ -4,7 +4,9 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import ShareButton from '@/components/ShareButton';
+import ShareButtonLine from '@/components/ShareButtonLine';
 import { Loader2 } from 'lucide-react';
+
 import { ConfettiFireworks } from '@/utils/confetiFireWorks';
 
 interface GameResultsShareProps {
@@ -46,7 +48,7 @@ export default function GameResultsShareContent({
           onLoad={() => handleConfetti()}
         />
         <ShareButton name={name} score={score} rank={rank} />
-        <ShareButton name={name} score={score} rank={rank} />
+        <ShareButtonLine name={name} score={score} rank={rank} />
       </motion.div>
     </div>
   );
