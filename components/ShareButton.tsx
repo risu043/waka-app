@@ -30,12 +30,35 @@ const ShareButton: React.FC<ShareButtonProps> = ({ name, score, rank }) => {
       onClick={handleShare}
       variant="outline"
       size="lg"
-      className="bg-neutral-800 text-white hover:bg-neutral-700 hover:text-white border-none rounded-full mt-4 p-4 text-xl"
+      className="bg-neutral-800 text-white hover:bg-neutral-800 hover:text-white border-none rounded-full p-0 m-0 h-12 w-12"
     >
-      <FaXTwitter className="h-8 w-8" />
-      <span className="mb-2">share</span>
+      <FaXTwitter />
     </Button>
   );
 };
 
 export default ShareButton;
+// 'use client';
+// import { TwitterShareButton, TwitterIcon } from 'react-share';
+// import { ShareButtonProps } from '@/type';
+
+// const ShareButton: React.FC<ShareButtonProps> = ({ name, score, rank }) => {
+//   const text = `百人一首 | ${name}さんのスコアは${score}点！${rank}位にランクインしました`;
+
+//   const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL || 'http://localhost:3000';
+//   const params = new URLSearchParams({
+//     name: name.toString(),
+//     score: score.toString(),
+//     rank: rank.toString(),
+//   });
+//   const url = `${baseUrl}?${params.toString()}`;
+//   return (
+//     <>
+//       <TwitterShareButton url={url} title={text}>
+//         <TwitterIcon size={30} round={true} />
+//       </TwitterShareButton>
+//     </>
+//   );
+// };
+
+// export default ShareButton;

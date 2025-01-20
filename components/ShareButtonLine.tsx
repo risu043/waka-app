@@ -15,7 +15,7 @@ const ShareButtonLine: React.FC<ShareButtonProps> = ({ name, score, rank }) => {
   return (
     <>
       <LineShareButton url={url} title={text}>
-        <LineIcon size={30} round={true} />
+        <LineIcon size={50} round={true} />
       </LineShareButton>
     </>
   );

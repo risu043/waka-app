@@ -47,8 +47,10 @@ export default function GameResultsShareContent({
           alt="クリア画像"
           onLoad={() => handleConfetti()}
         />
-        <ShareButton name={name} score={score} rank={rank} />
-        <ShareButtonLine name={name} score={score} rank={rank} />
+        <div className="flex flex-baseline space-x-2 mt-4">
+          <ShareButton name={name} score={score} rank={rank} />
+          <ShareButtonLine name={name} score={score} rank={rank} />
+        </div>
       </motion.div>
     </div>
   );
