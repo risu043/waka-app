@@ -9,7 +9,10 @@ export async function GET(req: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL;
     const apiUrl = `${baseUrl}/wakas/search?page=${page}&filter=${filter}&author=${author}`;
 
-    const res = await fetch(apiUrl);
+    const res = await fetch(apiUrl, {
+      method: 'GET',
+      credentials: 'include',
+    });
     const data = await res.json();
 
     return NextResponse.json(data);

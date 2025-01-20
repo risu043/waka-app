@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const nextConfig: NextConfig = {
   /* config options here */
   reactStrictMode: true,
@@ -10,7 +12,7 @@ const nextConfig: NextConfig = {
         source: '/api/:path*',
         headers: [
           { key: 'Access-Control-Allow-Credentials', value: 'true' },
-          { key: 'Access-Control-Allow-Origin', value: '*' },
+          { key: 'Access-Control-Allow-Origin', value: `${baseUrl}` },
           {
             key: 'Access-Control-Allow-Methods',
             value: 'GET,OPTIONS,PATCH,DELETE,POST,PUT',

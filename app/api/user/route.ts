@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
   const apiUrl = `${baseUrl}/users`;
   const res = await fetch(apiUrl, {
     method: 'POST',
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
   });
@@ -27,7 +28,10 @@ export async function GET(req: NextRequest) {
 
     const apiUrl = `${baseUrl}/users?page=${page}`;
 
-    const res = await fetch(apiUrl);
+    const res = await fetch(apiUrl, {
+      method: 'GET',
+      credentials: 'include',
+    });
     const data = await res.json();
 
     return NextResponse.json(data);

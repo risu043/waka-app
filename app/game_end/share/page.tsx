@@ -19,7 +19,7 @@ export default async function Page(props: PageProps) {
       <Card className="w-full">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Registered!</CardTitle>
-          <CardDescription>Thank for registering ranking !</CardDescription>
+          <CardDescription>Thank for!</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="mx-auto w-fit">
