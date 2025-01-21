@@ -77,15 +77,15 @@ export const GameBoard = () => {
   };
 
   const calculateTimeBonus = (seconds: number): number => {
-    // 3秒以内: 500点
-    // 5秒以内: 400点
-    // 7秒以内: 300点
-    // 9秒以内: 200点
+    // 1秒以内: 500点
+    // 3秒以内: 400点
+    // 5秒以内: 300点
+    // 7秒以内: 200点
     // それ以上: 100点
-    if (seconds <= 3) return 500;
-    if (seconds <= 5) return 400;
-    if (seconds <= 7) return 300;
-    if (seconds <= 9) return 200;
+    if (seconds <= 1) return 500;
+    if (seconds <= 3) return 400;
+    if (seconds <= 5) return 300;
+    if (seconds <= 7) return 200;
     return 100;
   };
 
