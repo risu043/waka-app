@@ -38,6 +38,41 @@ export default function Pagination({ hitCount, pageVolume }: PaginationProps) {
     replace(createPageURL(index + 1));
   };
 
+  const getVisiblePages = () => {
+    const delta = 1; // 現在のページの前後に表示するページ数
+    const edges = 1; // 最初と最後に必ず表示するページ数
+    const left = currentPage - delta;
+    const right = currentPage + delta;
+
+    const range = [];
+    const rangeWithDots = [];
+    let l;
+
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i <= edges || // 先頭のページ
+        i > totalPages - edges || // 最後のページ
+        (i >= left && i <= right) // 現在のページの前後
+      ) {
+        range.push(i);
+      }
+    }
+
+    for (const i of range) {
+      if (l) {
+        if (i - l === 2) {
+          rangeWithDots.push(l + 1);
+        } else if (i - l !== 1) {
+          rangeWithDots.push('...');
+        }
+      }
+      rangeWithDots.push(i);
+      l = i;
+    }
+
+    return rangeWithDots;
+  };
+
   return (
     <div className="flex space-x-4 mx-auto w-fit">
       <button
@@ -51,19 +86,23 @@ export default function Pagination({ hitCount, pageVolume }: PaginationProps) {
       </button>
 
       <ul className="flex flex-wrap space-x-4">
-        {Array.from({ length: totalPages }, (_, index) => (
+        {getVisiblePages().map((pageNum, index) => (
           <li key={index} className="mb-4">
-            {currentPage === index + 1 ? (
+            {pageNum === '...' ? (
+              <span className="w-10 h-10 flex items-center justify-center">
+                {pageNum}
+              </span>
+            ) : currentPage === pageNum ? (
               <RippleButton className="cursor-auto w-10 h-10 rounded-full text-white accent-color pagination">
-                {index + 1}
+                {pageNum}
               </RippleButton>
             ) : (
               <RippleButton
                 rippleColor="#dddddd"
-                onClick={() => handleButtonPageClick(index)}
+                onClick={() => handleButtonPageClick(Number(pageNum) - 1)}
                 className="w-10 h-10 rounded-full pagination"
               >
-                {index + 1}
+                {pageNum}
               </RippleButton>
             )}
           </li>
