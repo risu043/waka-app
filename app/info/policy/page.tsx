@@ -8,7 +8,9 @@ const shipporiMincho = Shippori_Mincho({
 
 export default function TermsOfService() {
   return (
-    <div className={`${shipporiMincho.className} container mx-auto py-8`}>
+    <div
+      className={`${shipporiMincho.className} container mx-auto max-w-4xl  py-8`}
+    >
       <h1 className="text-3xl font-bold mb-6 text-center">
         プライバシーポリシー
       </h1>

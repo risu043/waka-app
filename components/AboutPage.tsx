@@ -135,10 +135,10 @@ export default function AboutPage() {
                 priority
                 className="rounded-lg shadow-md"
               />
-              <ul className="list-disc pl-5 space-y-2 ml-4">
+              <ul className="list-disc pl-5 space-y-2 ml-4 pb-8">
                 <li>10首目の判定が終わるとクリア画面に移動します。</li>
                 <li>
-                  ニックネームを入力して送信すると、ランキング画面に掲載されます。
+                  お名前を入力して送信すると、ランキング画面に掲載されます。
                 </li>
                 <li>
                   速くクリアする程スコアが加算されます。是非遊んでみてください！

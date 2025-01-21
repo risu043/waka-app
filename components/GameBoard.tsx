@@ -167,7 +167,7 @@ export const GameBoard = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 max-w-screen-xl">
+    <div className="container mx-auto p-4 max-w-7xl">
       <RippleButton
         rippleColor="#FFFFFF"
         onClick={handleStart}
