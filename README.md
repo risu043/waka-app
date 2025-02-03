@@ -68,7 +68,7 @@
 
 ## 画面遷移図
 
-<img src="https://github.com/risu043/waka-app/blob/main/public/image/readm5.png" width="600" alt="readme5">
+<img src="https://github.com/risu043/waka-app/blob/main/public/image/readme5.png" width="600" alt="readme5">
 
 ## env
 
